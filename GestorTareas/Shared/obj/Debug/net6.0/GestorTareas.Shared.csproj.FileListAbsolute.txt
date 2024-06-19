@@ -1,0 +1,11 @@
+C:\Users\USER\source\repos\GestorTareas\GestorTareas\Shared\bin\Debug\net6.0\GestorTareas.Shared.deps.json
+C:\Users\USER\source\repos\GestorTareas\GestorTareas\Shared\bin\Debug\net6.0\GestorTareas.Shared.dll
+C:\Users\USER\source\repos\GestorTareas\GestorTareas\Shared\bin\Debug\net6.0\GestorTareas.Shared.pdb
+C:\Users\USER\source\repos\GestorTareas\GestorTareas\Shared\obj\Debug\net6.0\GestorTareas.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\USER\source\repos\GestorTareas\GestorTareas\Shared\obj\Debug\net6.0\GestorTareas.Shared.AssemblyInfoInputs.cache
+C:\Users\USER\source\repos\GestorTareas\GestorTareas\Shared\obj\Debug\net6.0\GestorTareas.Shared.AssemblyInfo.cs
+C:\Users\USER\source\repos\GestorTareas\GestorTareas\Shared\obj\Debug\net6.0\GestorTareas.Shared.csproj.CoreCompileInputs.cache
+C:\Users\USER\source\repos\GestorTareas\GestorTareas\Shared\obj\Debug\net6.0\GestorTareas.Shared.dll
+C:\Users\USER\source\repos\GestorTareas\GestorTareas\Shared\obj\Debug\net6.0\refint\GestorTareas.Shared.dll
+C:\Users\USER\source\repos\GestorTareas\GestorTareas\Shared\obj\Debug\net6.0\GestorTareas.Shared.pdb
+C:\Users\USER\source\repos\GestorTareas\GestorTareas\Shared\obj\Debug\net6.0\ref\GestorTareas.Shared.dll
