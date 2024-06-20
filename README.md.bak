@@ -2,6 +2,8 @@
 Aplicación para la generación de tareas
 La apliación fue diseña base una aplicación de blazor webassembly, la aplicación como tal cuenta con dos aplicaciones.
 Una aplicación es del lado del cliente y otra aplicación es del lado del servidor, esto con el objetivo de crear un CORE de API para que multiples sitios pudieran consumir los servicio de la aplicación server,ademas asegurando una escabilidad del proyecto.
+La aplicación tiene una capa de seguridad mediante token JWT usando los data anotation [Authorize] en los controller, asegurando que solamente las personas actividad de TOKEN puedan consumir los recursos de la API.
+La aplicación cuenta con un performance de inyección de dependcias para que la manera del escalado de la programación sea de manera modular y se puedan reutilizar las funciones en direntes partes del codigo.
 
 
 Ventajas de Blazor
@@ -17,7 +19,7 @@ Ventajas de .NET Core
 -Contenedores: .NET Core se integra bien con Docker, facilitando la creación, despliegue y escalado de aplicaciones en contenedores
 -Open Source: Al ser de código abierto, .NET Core tiene una comunidad activa y en crecimiento, lo que contribuye a la mejora continua y a la disponibilidad de recursos y soporte.
 
-Conclusión
+
 
 
 #Ficha tecnica

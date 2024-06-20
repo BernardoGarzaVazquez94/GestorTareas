@@ -1,3 +1,20 @@
+#Descripción
+Gestor de Tareas es una aplicación web de mini gestión de tareas que permite a los usuarios crear, editar, eliminar y listar tareas. 
+La aplicación utiliza .NET para el backend y Blazor para el frontend, con Radzen como complemento para componentes de interfaz de usuario.
+
+#Características
+1)Autenticación de Usuarios:
+	Registro e inicio de sesión de usuarios.
+	Autenticación mediante JWT (JSON Web Tokens).
+2)Gestión de Tareas:
+	Crear tareas con título, descripción y fecha de vencimiento.
+	Listar todas las tareas del usuario.
+	Editar detalles de tareas existentes.
+	Eliminar tareas no necesarias.
+3)Interfaz de Usuario:
+	Interfaz limpia, funcional y responsiva.
+	Utilización de Radzen para mejorar la experiencia de usuario.
+
 # GestorTareas
 Aplicación para la generación de tareas
 La apliación fue diseña base una aplicación de blazor webassembly, la aplicación como tal cuenta con dos aplicaciones.
@@ -38,6 +55,22 @@ Ventajas de .NET Core
 4.-Buscar el archivo con nombre appsettings.json en el proyecto de GestorTareas.Server y cambiar las credenciales de la conexión.
 5.-Ejecutar la aplicación y probar la funcionalidad de crear tareas.
 
+#Uso de la Aplicación
+1.-Registro e Inicio de Sesión
+2.-Abre la aplicación en tu navegador y navega a la página de registro para crear una nueva cuenta.
+3-Inicia sesión con tus credenciales.
+4-Una vez autenticado, podrás crear nuevas tareas desde la página de creación de tareas.
+5-Podrás ver todas tus tareas en la página de listado de tareas.
+6-Podrás editar y eliminar tareas desde la página de detalle de cada tarea.
+
+
+#Validar el token JWT desde postman
+ruta:de tipo [POST] https://localhost:7128/api/Auth/login
+body 
+{
+    "Username":"Bernardo",
+    "Password":"garza123"
+}
 
 #Scripts para la generación de la base de datos
 -- Crear la base de datos GestionTareas
