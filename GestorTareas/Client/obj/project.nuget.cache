@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BL3KJMr5631M+abfl89vqcqcHveIC9xp5JtksljaxEbme9P0MUk8PA86E1GcOB6qxziKhqcsxj0OiuMnhPgqUA==",
+  "dgSpecHash": "+XA9nnh31bYdvJf7dJUzh+RkHWuYr3A+GUZxCBvzabh8Cxxx1bBYyCrslerwADOvhRTKJMidDdWfFivFrkZuCQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\USER\\source\\repos\\Nueva carpeta\\GestorTareas\\GestorTareas\\Client\\GestorTareas.Client.csproj",
+  "projectFilePath": "C:\\GitBerna\\GestorTareas\\GestorTareas\\Client\\GestorTareas.Client.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\USER\\.nuget\\packages\\dartsassbuilder\\1.0.0\\dartsassbuilder.1.0.0.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\microsoft.aspnetcore.authorization\\6.0.25\\microsoft.aspnetcore.authorization.6.0.25.nupkg.sha512",

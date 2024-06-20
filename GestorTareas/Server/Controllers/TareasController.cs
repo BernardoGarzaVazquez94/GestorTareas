@@ -1,49 +1,86 @@
 ﻿using GestorTareas.Server.Data;
+using GestorTareas.Server.Interfaces;
 using GestorTareas.Server.Models;
 using GestorTareas.Shared;
 using GestorTareas.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace GestorTareas.Server.Controllers
 {
 	[ApiController]
 	[Route("api/[controller]")]
-	public class TareasController : ControllerBase
+    //[Authorize]-- Se comenta la linea Authorize para poder realizar el ejercicio de pruebas,
+    //a traves del POSTMAN si esta funcionando los bearer token generados
+    public class TareasController : ControllerBase
 	{
-		private readonly GestorTareasContext _context;
+		
 
-		public TareasController(GestorTareasContext context)
-		{
-			_context = context;
+		//Definición de interfaz para realizar inyección de dependencias en el codigo
+		//Así como trabajar de manera modular y reutilizar funciones especificas
+        private readonly ITareasRepository ITareasRepository;
+
+
+        public TareasController(ITareasRepository ItareasRepository)
+		{			
+			ITareasRepository = ItareasRepository;
 		}
 
-		/// <summary>
-		/// EP para obtener la lista de todas las tareas
-		/// </summary>
-		/// <returns></returns>
-		[HttpGet]
+        /// <summary>
+        /// EP para obtener la lista de todas las tareas
+        /// </summary>
+        /// <returns></returns>
+        ///         
+        [HttpGet]
         [Route("obtener-tareas")]
         public async Task<ActionResult<IEnumerable<Tareas>>> ObtenerTareas()
 		{
-			return await _context.Tareas.ToListAsync();
+			try
+			{
+				//Obtiene toda la lista de tareas
+				List<Tareas> tareas = await ITareasRepository.obtenerTareas();
+				return tareas;                
+            }
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+				throw;
+			}
+
+			
 		}
 
-		/// <summary>
-		/// EP para obtener una tarea en especifico
-		/// </summary>
-		/// <param name="id"></param>
-		/// <returns></returns>
-		[HttpGet]
+        /// <summary>
+        /// EP para obtener una tarea en especifico
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        ///         
+        [HttpGet]
         [Route("obtener-tarea-porId")]
         public async Task<ActionResult<Tareas>> ObtenerTareaPorId(int id)
 		{
-			var task = await _context.Tareas.FindAsync(id);
-			if (task == null)
+			try
 			{
-				return NotFound();
+				//Busca la tarea especifica por el id de la tarea
+                Tareas tarea = await ITareasRepository.obtenerTareaPorId(id);
+
+				//Si no encuentra la tarea se envia un notFound
+                if (tarea == null)
+                {
+                    return NotFound();
+                }
+                return tarea;
+            }
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+				throw;
 			}
-			return task;
+
+			
 		}
 
 		/// <summary>
@@ -53,14 +90,26 @@ namespace GestorTareas.Server.Controllers
 		/// <returns></returns>
 		[HttpPost]
         [Route("agregar-tarea")]
-        public async Task<ActionResult<Tareas>> AgregarTarea(Tareas task)
+        public async Task<ActionResult<Tareas>> AgregarTarea(Tareas tarea)
 		{
 
-			task.UsuarioId = 1;
+			try
+			{
+                tarea.UsuarioId = 1;                
+                Tareas nuevaTarea = await ITareasRepository.agregarNuevaTarea(tarea);
 
-            _context.Tareas.Add(task);
-			await _context.SaveChangesAsync();
-			return CreatedAtAction(nameof(ObtenerTareaPorId), new { id = task.Id }, task);
+                return CreatedAtAction(nameof(ObtenerTareaPorId), new { id = nuevaTarea.Id }, tarea);
+
+
+            }
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+				throw;
+			}
+			
+
+            
 		}
 
 		/// <summary>
@@ -71,37 +120,36 @@ namespace GestorTareas.Server.Controllers
 		/// <returns></returns>
 		[HttpPut]
         [Route("actualizar-tarea-porId")]
-        public async Task<IActionResult> ActualizarTareaPorId(int id, Tareas task)
+        public async Task<IActionResult> ActualizarTareaPorId(int id, Tareas tarea)
 		{
-
-			var tarea = await _context.Tareas.Where(p=> p.Id == id).FirstOrDefaultAsync();
-
-			if (tarea == null)
-			{
-				return BadRequest();
-			}
-			else
-			{
-				tarea.Titulo = task.Titulo;
-				tarea.Descripcion = task.Descripcion;
-				tarea.FechaVencimiento = task.FechaVencimiento;
-            }			
 			try
 			{
-				await _context.SaveChangesAsync();
-			}
-			catch (DbUpdateConcurrencyException)
+				//Busca y actualiza una tarea por el ID 
+                Tareas tareaActualizada = await ITareasRepository.actualizarTareaPorId(id, tarea);
+
+				//Si el modelo de la tarea viene null se indica que es una mala solicitud
+                if (tarea == null)
+                {
+                    return BadRequest();
+                }
+                else
+                {
+					//Si se actualizo correctamente se manda la respuesta JSON de la tarea actualizada
+                    if (tareaActualizada != null)
+                    {
+                        return CreatedAtAction(nameof(ObtenerTareaPorId), new { id = tareaActualizada.Id }, tarea);
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                }
+            }
+			catch (Exception ex)
 			{
-				if (!TaskExists(id))
-				{
-					return NotFound();
-				}
-				else
-				{
-					throw;
-				}
-			}
-            return CreatedAtAction(nameof(ObtenerTareaPorId), new { id = task.Id }, task);
+				Console.WriteLine(ex.Message);
+				throw;
+			}			                        
         }
 
 		/// <summary>
@@ -111,25 +159,28 @@ namespace GestorTareas.Server.Controllers
 		/// <returns></returns>
 		[HttpDelete]
         [Route("eliminar-tarea-porId")]
-        public async Task<IActionResult> DeleteTask(int id)
+        public async Task<IActionResult> BorrarTarea(int id)
 		{
-			var task = await _context.Tareas.FindAsync(id);
-			if (task == null)
+			try
 			{
-				return NotFound();
+				//Funcion para eliminar una tarea por el ID 
+				Tareas tareaEliminada = await ITareasRepository.eliminarTareaPorId(id);
+                
+                if (tareaEliminada == null)
+                {
+                    return NotFound();
+                }
+                
+                return NoContent();
+            }
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+				throw;
 			}
-			_context.Tareas.Remove(task);
-			await _context.SaveChangesAsync();
-			return NoContent();
+
+			
 		}
-
-		private bool TaskExists(int id)
-		{
-			return _context.Tareas.Any(e => e.Id == id);
-		}
-
-
-       
-
+	       
     }
 }

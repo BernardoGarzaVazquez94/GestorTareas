@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "fIYoIopNVolziYMuWKrRnBfoZFvCMbYwf1vjrirgeGCy/3358A8PsFcFJ7t+xTYYGLyU2l2CNEBYVot6C4PGhA==",
+  "dgSpecHash": "MTMRzT940ve82oDxJVMTTIQxaaIiw7JB4h9BFbcPCrPvpb16Kj5DzKnqPe4c0rJBNBR3QSTJIB8Rlc3tDXI8wg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\USER\\source\\repos\\Nueva carpeta\\GestorTareas\\GestorTareas\\Server\\GestorTareas.Server.csproj",
+  "projectFilePath": "C:\\GitBerna\\GestorTareas\\GestorTareas\\Server\\GestorTareas.Server.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\USER\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\dartsassbuilder\\1.0.0\\dartsassbuilder.1.0.0.nupkg.sha512",

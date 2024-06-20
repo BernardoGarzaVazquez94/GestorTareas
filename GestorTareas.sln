@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34018.315
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestorTareas.Server", "GestorTareas\Server\GestorTareas.Server.csproj", "{8E0EFAFA-2E06-4435-BF16-AC948D5CFF66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GestorTareas.Server", "GestorTareas\Server\GestorTareas.Server.csproj", "{8E0EFAFA-2E06-4435-BF16-AC948D5CFF66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestorTareas.Client", "GestorTareas\Client\GestorTareas.Client.csproj", "{1D6F5040-77CF-4CE9-9087-0B7F58314C1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GestorTareas.Client", "GestorTareas\Client\GestorTareas.Client.csproj", "{1D6F5040-77CF-4CE9-9087-0B7F58314C1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestorTareas.Shared", "GestorTareas\Shared\GestorTareas.Shared.csproj", "{9618783D-703C-49B8-9655-A1E26BB9F211}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GestorTareas.Shared", "GestorTareas\Shared\GestorTareas.Shared.csproj", "{9618783D-703C-49B8-9655-A1E26BB9F211}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,29 +1,50 @@
 ﻿using GestorTareas.Shared.Models;
 using System.Net.Http.Json;
 
-namespace GestorTareas.Client.Helpers
+namespace GestorTareas.Client.Services
 {
-	public class AuthService
-	{
-		private readonly HttpClient _httpClient;
+    public class AuthService
+    {
+        private readonly HttpClient _httpClient;
 
-		public AuthService(HttpClient httpClient)
-		{
-			_httpClient = httpClient;
-		}
 
-		public async Task<string> Login(UsuarioDTO usuario)
-		{
-			var response = await _httpClient.PostAsJsonAsync("api/auth/login", usuario);
-			response.EnsureSuccessStatusCode();
-			var result = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
-			return result["Token"];
-		}
+        public AuthService(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
 
-		public async Task Register(UsuarioDTO usuario)
-		{
-			var response = await _httpClient.PostAsJsonAsync("api/auth/register", usuario);
-			response.EnsureSuccessStatusCode();
-		}
-	}
+        /// <summary>
+        /// Es la función que conecta la vista con el servidor para el inicio de sesión y generar el token JWT
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public async Task<string> Login(UsuarioDTO user)
+        {
+            var response = await _httpClient.PostAsJsonAsync("api/auth/login", user);
+
+            if (response.IsSuccessStatusCode)
+            {
+                response.EnsureSuccessStatusCode();
+                var result = await response.Content.ReadFromJsonAsync<AuthResponseDTO>();
+                return result?.Token; 
+            }
+            else
+            {
+                return null;
+            }
+
+            
+        }
+
+        /// <summary>
+        /// Función que conecta la vista con el servidor para generar una nueva cuenta de inicio de sesión
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public async Task Register(UsuarioDTO user)
+        {
+            var response = await _httpClient.PostAsJsonAsync("api/auth/register", user);
+            response.EnsureSuccessStatusCode();
+        }
+    }
 }

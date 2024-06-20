@@ -1,0 +1,109 @@
+﻿@page "/register"
+@layout Logigigig
+@using GestorTareas.Client.Services;
+@using GestorTareas.Shared.Models;
+@using Radzen.Blazor
+@using Radzen;
+@inject AuthService AuthService
+@inject NavigationManager Navigation
+@inject NotificationService NotificationService
+
+
+<div Class="rz-p-0 rz-p-md-12">
+
+<RadzenCard class="rz-my-12 rz-mx-auto rz-p-4 rz-p-md-12" style="max-width: 600px;">
+
+        <RadzenStack AlignItems="AlignItems.Center" Class="rz-mx-auto rz-my-1">
+
+            <RadzenImage Path="https://cdn-icons-png.freepik.com/512/14724/14724067.png" Style="width: 5rem;" AlternateText="url image" />
+            <RadzenText TextStyle="TextStyle.H4">Crear Cuenta</RadzenText>
+
+        </RadzenStack>
+    <RadzenTemplateForm TItem="Model" Data=@model Submit=@OnSubmit InvalidSubmit=@OnInvalidSubmit>
+        <RadzenStack Gap="1rem" Class="rz-p-sm-12">
+            <RadzenFormField Text="Usuario" >
+                <ChildContent>
+                    <RadzenTextBox Name="Usuario" @bind-Value=@model.Usuario />
+                </ChildContent>
+                <Helper>
+                        <RadzenRequiredValidator Component="Usuario" Text="El usuario es requerido" Popup=@popup Style="position: absolute" />
+                </Helper>
+            </RadzenFormField>
+            <RadzenFormField Text="Contraseña" >
+                <ChildContent>
+                        <RadzenPassword Name="Contraseña" @bind-Value=@model.Contraseña />
+                </ChildContent>
+                <Helper>
+                        <RadzenRequiredValidator Component="Contraseña" Text="La contraseña es requerida" Popup=@popup Style="position: absolute" />
+                </Helper>
+            </RadzenFormField>
+                <RadzenButton Click=@(args => OnClickGuardar(model)) Text="Crear cuenta" ButtonStyle="ButtonStyle.Secondary" />
+                <RadzenButton Click=@(args => OnClick()) Text="Ya tengo una cuenta" ButtonStyle="ButtonStyle.Primary" />                
+        </RadzenStack>
+    </RadzenTemplateForm>
+    </RadzenCard>
+</div>
+
+@code {
+    Variant variant = Variant.Outlined;
+
+    class Model
+    {
+        public string Usuario { get; set; }
+        public string Contraseña { get; set; }
+    }
+
+    Model model = new Model();    
+    bool popup;
+    void OnSubmit(Model model)
+    {
+
+    }
+
+    void OnInvalidSubmit(FormInvalidSubmitEventArgs args)
+    {        
+    }
+
+    private void OnClick()
+    {
+        Navigation.NavigateTo("/");
+    }
+
+    /// <summary>
+    /// Acción para mandar llamar el metodo que genera una nueva cuenta
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    async Task OnClickGuardar(Model model)
+    {
+        UsuarioDTO user = new UsuarioDTO();
+
+        user.Username = model.Usuario;
+        user.Password = model.Contraseña;
+
+        if (!String.IsNullOrEmpty(user.Username) || !String.IsNullOrEmpty(user.Password))
+        {
+            await AuthService.Register(user);
+            ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Completado", Detail = "Se ha generado una nueva cuenta", Duration = 4000 });
+        }
+        else
+        {
+            ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Error", Detail = "completa los campos ", Duration = 4000 });
+        }
+
+
+
+    }
+
+    /// <summary>
+    /// Función para mostrar la notificación
+    /// </summary>
+    /// <param name="message"></param>
+    void ShowNotification(NotificationMessage message)
+    {
+        NotificationService.Notify(message);
+        
+    }
+
+}
+

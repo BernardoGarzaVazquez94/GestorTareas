@@ -1,4 +1,6 @@
 using GestorTareas.Server.Data;
+using GestorTareas.Server.Interfaces;
+using GestorTareas.Server.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddTransient<ITareasRepository, TareasRepository>();
 builder.Services.AddRazorPages();
 
 // Add DbContext and configure connection string

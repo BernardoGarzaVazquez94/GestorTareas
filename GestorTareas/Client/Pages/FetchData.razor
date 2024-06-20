@@ -115,9 +115,12 @@ else
         Reset(tarea);
     }
 
+    //Funcion para guardar el renglon
     async Task SaveRow(TareasDTO tarea)
     {
         HttpResponseMessage response;
+
+        //si tarea tiene un id, significa que es una actualización de lo contrario es una nueva tarea
         if (tarea.Id != 0)
         {
             int Id = tarea.Id;
@@ -128,6 +131,7 @@ else
             response = await Http.PostAsJsonAsync("api/Tareas/agregar-tarea", tarea);
         }
 
+        //Si se completa actualizar o guardar la información se manda una notificación
         if (response.IsSuccessStatusCode)
         {
             ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Completado", Detail = "Acción realizada correctamente", Duration = 4000 });
@@ -169,6 +173,11 @@ else
         tareasGrid.CancelEditRow(tarea);
     }
 
+    /// <summary>
+    /// Elimina la tarea del renglon seleccionada
+    /// </summary>
+    /// <param name="tarea"></param>
+    /// <returns></returns>
     async Task DeleteRow(TareasDTO tarea)
     {
         Reset(tarea);
@@ -205,13 +214,17 @@ else
 
     async Task InsertRow()
     {
-        // var tarea = new TareasDTO();
-        // tareasParaInsertar.Add(tarea);
-        // await tareasGrid.InsertRow(tarea);
+        var tarea = new TareasDTO();
+        tareasParaInsertar.Add(tarea);
+        await tareasGrid.InsertRow(tarea);
 
-        ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Error", Detail = "Error en agregar la tarea", Duration = 4000 });
+
     }
 
+    /// <summary>
+    /// Funcion que permite disparar la notificiación tras una acción
+    /// </summary>
+    /// <param name="message"></param>
     void ShowNotification(NotificationMessage message)
     {
         NotificationService.Notify(message);
